@@ -10,7 +10,13 @@ const RightNav = () => {
     const { googleSignIn } = useContext(AuthContext);
 
     const handleGoogleLogIn = () => {
-        googleSignIn();
+        googleSignIn()
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+
+            })
+            .catch(error => console.error(error))
     }
     return (
         <div>
