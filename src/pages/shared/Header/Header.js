@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Image } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FaUser } from 'react-icons/fa';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import LeftNav from '../LeftNav/LeftNav';
 
 const Header = () => {
+
+    const { user } = useContext(AuthContext)
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
@@ -27,10 +33,17 @@ const Header = () => {
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Nav>
-                        <Nav.Link href="#deets">More deets</Nav.Link>
-                        <Nav.Link eventKey={2} href="#memes">
-                            Dank memes
+                    <Nav className='d-flex align-items-center'>
+                        <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
+                        <Nav.Link eventKey={2} >
+                            {user?.photoURL ?
+                                <Image
+                                    roundedCircle
+                                    style={{ height: "40px" }}
+                                    src={user.photoURL}></Image>
+                                :
+                                <FaUser></FaUser>
+                            }
                         </Nav.Link>
                     </Nav>
                     <div className='d-lg-none mt-2'>
