@@ -5,15 +5,20 @@ import { FaGoogle, FaGithub, FaTwitter, FaTwitch, FaWhatsapp, FaFacebook } from 
 import ListGroup from 'react-bootstrap/ListGroup';
 import BrandCarousel from '../BrandCarousel/BrandCarousel';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const RightNav = () => {
     const { googleSignIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/"
 
     const handleGoogleLogIn = () => {
         googleSignIn()
             .then(result => {
                 const user = result.user;
-                console.log(user)
+                console.log(user);
+                navigate(from, { replace: true })
 
             })
             .catch(error => console.error(error))

@@ -1,12 +1,12 @@
 import React from 'react';
-import { CardImg } from 'react-bootstrap';
+
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image'
 import { FaBookmark, FaShareAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const NewsSummaryCard = ({ news }) => {
-    const { _id, total_view, author, image_url, details, title } = news
+    const { _id, author, image_url, details, title } = news
     return (
         <Card className="my-5">
             <Card.Header>
@@ -37,9 +37,9 @@ const NewsSummaryCard = ({ news }) => {
                     {
                         details.length > 200
                             ?
-                            <div>{details.slice(0, 200) + "..."} <Link to={`/news/${_id}`}>Read More</Link></div>
+                            <>{details.slice(0, 200) + "..."} <Link to={`/news/${_id}`}>Read More</Link></>
                             :
-                            <div>{details}</div>
+                            <>{details}</>
                     }
                 </Card.Text>
 

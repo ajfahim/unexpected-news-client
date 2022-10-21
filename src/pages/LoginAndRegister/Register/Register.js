@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Register = () => {
 
     const [error, setError] = useState(null)
-    const { emailSignUp, updateUserProfile } = useContext(AuthContext);
+    const { emailSignUp, updateUserProfile, verifyEmail } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleRegistration = (event) => {
@@ -21,19 +22,38 @@ const Register = () => {
 
         emailSignUp(email, password)
             .then(result => {
-                updateUserProfile(name, photo)
-                    .then(() => { })
-                    .catch(error => {
-                        setError(error);
-                    })
+
                 form.reset();
                 setError(null);
-                navigate("/")
+                handleUpdateProfile(name, photo)
+
+                handleVerifyEmail();
+                toast.success("Verification mail sent. Please check your inbox ");
+                navigate("/");
             })
             .catch(error => {
                 console.error(error)
                 setError(error.message);
             })
+    }
+
+    const handleUpdateProfile = (name, photo) => {
+        const profile = {
+            displayName: name,
+            photoURL: photo
+        }
+        updateUserProfile(profile)
+            .then(result => {
+
+
+            })
+            .catch(error => console.error(error))
+    }
+
+    const handleVerifyEmail = () => {
+        verifyEmail()
+            .then(result => { })
+            .catch(console.error(error))
     }
 
     return (
